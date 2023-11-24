@@ -1,0 +1,108 @@
+p{
+    font-size: 15px;
+    font-weight: bolder;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    text-shadow: yellow;
+    margin: 0px;
+    margin-top: 5px;
+
+}
+h1{
+    color: green;
+    font-weight: bolder;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+}
+.containerInfo{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: aqua;
+    width: 500px;
+    height: auto;
+    margin-bottom: 20px;
+}
+.containerName{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 500px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.containerImg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:black;
+    width: 500px;
+    height: 300px;
+    margin-bottom: 10px;
+}
+.containerDescription{
+    display: flex;
+    align-items: center;
+    background-color:green;
+    width: 500px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+.containerType{
+    display: flex;
+    align-items: center;
+    background-color: red;
+    width: 500px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+.containerHabilities{
+    display: flex;
+    align-items: center;
+    background-color:green;
+    width: 500px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+.containerError{
+    width: 500px;
+    height: 40px;
+    background-color: aqua;
+    margin-left: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.containerEvolution{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: red;
+    width: 500px;
+    height: 60px;
+    height: auto;
+    margin-bottom: 10px;
+}
+img{
+    width:300px;
+    height: auto;
+}
+input{
+    text-align: center;
+    width: 300px;
+    height: 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+main, body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
