@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Busca tú Pokémon</title>
+    <meta name="Diego Andrés Mutis Muñoz" content="Programacion Web 2023-2" />
+    <link rel="icon" href="icono.png" type="image/x-icon" /> 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -9,10 +12,19 @@
 </head>
 <body>    
     <main>
-        <input type="text" id="in1" placeholder="Ingrese el nombre de su pokemon">
-        <button class="buttonSearch">Buscar</button>
+        <header>
+            <a href="index.html" > 
+                <img src="pokemon.png" class="imgLogo"/> 
+            </a>
+        </header>
+        <div class="containerFinder">
+            <input type="text" id="in1" placeholder="Ingrese el nombre de su pokemón">
+            <button class="buttonSearch"><img src="search.png"> </button>
+        </div>     
         <div class="containerError">
-            <p>Escribió mal care chimba</p>
+            <p>Valla! algo salió mal. <br>
+            Es posible que el nombre de tu pokemón este mal escrito. <br>
+            Por favor revisa e intenta nuevamente. </p>
         </div>
 
         <div class="containerInfo">
@@ -22,18 +34,21 @@
             <div class="containerImg">
                 <img src="" class="pokemonImg">
             </div>
-            <div class="containerDescription">
-                <h2>field for description</h2>
-            </div>
             <div class="containerType">
-                <h2>field for type</h1>
+                <h2 >Tipo: </h2>
+                <p class="pokemonType"></p>
+            </div>
+            <div class="containerDescription">
+                <h2>Descripción: </h2>
+                <p class="pokemonDescrition"></p>
             </div>
             <div class="containerHabilities">
-                <h2>field for habilyties</h2>
+                <h2>Habilidades: </h2>
+                <p class="pokemonAbilities"></p>
             </div>
         </div>
         <div class="containerEvolution">
-            <button class="buttonEvolution">Evolution</button>
+            <button class="buttonEvolution">Evolucionar</button>
         </div>
     </main>
 </body>

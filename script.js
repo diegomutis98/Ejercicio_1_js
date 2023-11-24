@@ -1,12 +1,10 @@
-const main = document.querySelector('main');
-const contenedor = document.createElement('div');
-const buttonEvolves = document.createElement("button");
 
+// constantes para el despliege del error y de la tageta prinsipal
 const containerErrorElement = document.querySelector(".containerError");
 const containerInfoElement = document.querySelector(".containerInfo");
 
+// variable para ir obteniendo el nombre de la siguente evolucion dado el caso
 var nextEvolutio = "";
-var contador = 0;
 
 // captura del evento click search
 const button1 = document.querySelector(".buttonSearch");
@@ -27,7 +25,6 @@ function capturar(){
 
 // funtion fot button Evolution
 function evolucionar(){
-    contador++;
     const url = "https://pokeapi.co/api/v2/pokemon/" + nextEvolutio;
     console.log(url);
     const responseApi = ConsumirApiWithAxios(url);
@@ -39,12 +36,11 @@ async function ConsumirApiWithAxios(url){
     containerErrorElement.style.display = 'none';
     try{
         const response = await axios.get(url);
-        //console.log(`la petición a la Api se completó correctamente: ${response.status}`);
+        console.log(`la petición a la Api se completó correctamente: ${response.status}`);
         return await response.data;
     }
     catch(error){
-        //console.log(`Falló la peticion con error: ${error.message}`);
-        //document.querySelector(".containerError").style.display = "block";
+        console.log(`Falló la peticion con error: ${error.message}`);
         containerInfoElement.style.display = 'none';
         document.querySelector('.containerEvolution').style.display = 'none';
         containerErrorElement.style.display = 'flex';
@@ -67,54 +63,73 @@ async function getDatosApi(resp){
     document.querySelector('.pokemonImg').src = pokemonSprites;
     //console.log(pokemonSprites);
 
+    // information type for the pokemon
+    const pokemenType = resApi.types[0].type.name;
+    document.querySelector('.pokemonType').textContent = `${pokemenType}`;
+
+    // for para extrael las abilidades
+    const numHabilities = resApi.abilities.length;
+    var abilities = "";
+    if(numHabilities>0){
+        abilities = resApi.abilities[0].ability.name;
+        for(let i = 1; i < numHabilities; i++){
+            abilities = abilities + ', ' + resApi.abilities[i].ability.name;
+        }
+    }
+    else{
+        abilities = "None";
+    }
+    document.querySelector('.pokemonAbilities').textContent = `${abilities}`;
+
     // we add the prisipal information
     containerInfoElement.style.display = 'flex';
 
-    const pokemonId = resApi.id;
-    //const url = "https://pokeapi.co/api/v2/evolution-chain/" + pokemonId;
-    //console.log(pokemonId);
-    const pokemonSpeciesUrl = " https://pokeapi.co/api/v2/pokemon-species/"+pokemonId+'/';
-    console.log(pokemonSpeciesUrl);
+    // accedemos al endpoint Species
+    const pokemonSpeciesUrl = resApi.species.url;
     const responseApiSpecies = ConsumirApiWithAxios(pokemonSpeciesUrl);
     getDatosApiSpecies(responseApiSpecies);
-
 }
 
 async function getDatosApiSpecies(resp){
     const resApi = await resp;
-    console.log(resApi);
 
-    var evolutionChainUrl = resApi.evolution_chain.url;
-    console.log(evolutionChainUrl);
+    // obtenemos la descripción para un pokemon dado
+    const pokemonDescription1 = resApi.flavor_text_entries[26].flavor_text;
+    const pokemonDescription2 = resApi.flavor_text_entries[79].flavor_text;
+    const pokemonDescription = pokemonDescription1+' '+pokemonDescription2;
+    document.querySelector('.pokemonDescrition').textContent = pokemonDescription;
 
+    // accedemos al endpoint de evolution chain
+    const evolutionChainUrl = resApi.evolution_chain.url;
     const responseApiEvoltionChain = ConsumirApiWithAxios(evolutionChainUrl);
     getDatosApiSEvolutionChain(responseApiEvoltionChain); 
 }
 
 async function getDatosApiSEvolutionChain(resp){
     const resApi = await resp;
-    console.log(resApi);
-    var pokemonEvolvesTo = resApi.chain.evolves_to;
-    var i = 0
-    while(i<2){
-        //const pokemonEvolvesTo = resApi.chain.evolves_to;
-        pokemonEvolvesTo = pokemonEvolvesTo[0].species.name;
-    //console.log(pokemonEvolvesTo);
-    console.log(pokemonEvolvesTo[0].species.name);
-    //console.log(pokemonEvolvesTo[0].species.url);
-    i=i+1;
-    console.log(i);
-    }
-    
+    let nextChain = resApi.chain;
+    let pokename = resApi.chain.species.name;
 
-    if(pokemonEvolvesTo.length > 0){
-        //console.log("si pase ");
-        nextEvolutio = pokemonEvolvesTo[0].species.name;
-        //console.log(nextEvolutio);
+    // para obtener el objeto con los datos de la evolución adecuada
+    while(pokename != document.querySelector('.pokemonName').textContent){
+        nextChain = calcular_next(nextChain);
+        pokename = nextChain.species.name;
+        console.log(nextChain);
+    }
+
+    // verificamos si el pokemon tiene evoluciones
+    if(nextChain.evolves_to.length > 0){
+        nextEvolutio = nextChain.evolves_to[0].species.name;
+        console.log(nextEvolutio);
+
         document.querySelector('.containerEvolution').style.display = 'flex';
+
     }
     else{
-        //console.log("este pokemon no evoluciona");
         document.querySelector('.containerEvolution').style.display = 'none';
     }
+}
+
+function calcular_next(nextEvolution){
+    return nextEvolution.evolves_to[0];
 }
