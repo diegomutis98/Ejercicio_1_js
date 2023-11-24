@@ -130,6 +130,7 @@ async function getDatosApiSEvolutionChain(resp){
     }
 }
 
+// función para carcular los parametros adecuados para le evolución
 function calcular_next(nextEvolution){
     return nextEvolution.evolves_to[0];
 }
